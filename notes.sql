@@ -146,3 +146,48 @@ FROM product_data;
 ALTER TABLE product_data
 ALTER COLUMN "newColumn" 
 SET NOT NULL;
+
+-- C.R.U.D - DELETE
+-- 1. Vymazanie záznamu
+DELETE FROM "nazovTabulky"
+WHERE "idTabulky" = 2;
+
+-- 2. Niekedy je užitočné nielen záznam vymazať ale aj vrátiť jeho hodnotu RETURNING
+-- dôležité napr. pre REST API / BACKEND SERVERS
+-- RETURNING funguje ako SELECT 
+DELETE FROM "nazovTabulky"
+WHERE "idTabulky" = 2
+RETURNING *; 
+
+-- 3. Vymazať OBSAH TABUĽKY - VŠETKY ZÁZNAMY - celý príklad
+CREATE TABLE "nazovTabulky"(
+	name VARCHAR,
+	surname VARCHAR,
+	tabulka_id SERIAL PRIMARY KEY
+);
+
+INSERT INTO "nazovTabulky" (name, surname)
+VALUES ('Andrea', 'Priezvisko1');
+INSERT INTO "nazovTabulky" (name, surname)
+VALUES ('Marek', 'Priezvisko2');
+INSERT INTO "nazovTabulky" (name, surname)
+VALUES ('Dominik', 'Priezvisko3');
+
+SELECT * FROM "nazovTabulky";
+
+-- ponechá hodnotu autoincrementu - to znamená, že ak potom pridám nové záznamy
+-- budú sa priradzovať id od čísla 4 - keďže sme vymazali 3 záznamy
+DELETE FROM "nazovTabulky";
+-- ostanú len prázdne stĺpce bez záznamov, ktoré sme vyššie insertovali
+SELECT * FROM "nazovTabulky";
+
+-- 4. DROP - ZMAŽE CELÚ TABUĽKU SO ZÁZNAMAMI - NEPOUŽÍVAŤ - naozaj iba v najnutnejších prípadoch
+-- mazanie údajov - postupne riadok po riadku
+DROP TABLE "nazovTabulky";
+
+-- 5. TRUNCATE TABLE - tak isto opatrne! - rýchlejší ako DELETE FROM - súvisí s transakciami
+TRUNCATE TABLE "nazovTabulky";
+
+-- 6. TRUNCATE TABLE - RESTART IDENTITY - reštartuje aj autoincrement - čiže by sa počítal opäť od 1
+-- uzamyká sa celá tabuľka, rýchlejšie mazanie
+TRUNCATE TABLE "nazovTabulky" RESTART IDENTITY;
