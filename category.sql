@@ -18,3 +18,4 @@ CREATE TABLE IF NOT EXISTS category_data (
 	"metaDescription" VARCHAR,
 	CONSTRAINT "PK_category" PRIMARY KEY (id)
 );
+
