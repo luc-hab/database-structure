@@ -101,3 +101,48 @@ WHERE "pairCode" != 0 AND LENGTH(name) BETWEEN 17 AND 20;
 
 -- PORADIE VYHODNOCOVANIA PRÍKAZOV
 -- FROM ->WHERE -> SELECT -> ORDER BY -> LIMIT 
+
+-- ÚPRAVA TABUĽKY - ALTER TABLE
+-- RENAME TO - premenovanie tabuľky
+ALTER TABLE nazov_tabulky
+RENAME TO "nazovTabulky"; 
+
+-- RENAME COLUMN - premenovanie stĺpca tabuľky
+ALTER TABLE product_data
+RENAME COLUMN "pairCode" TO pair_code; 
+
+-- UPDATE konkrétnej HODNOTY - RIADKU tabuľky
+-- UPDATE nazov tabulky SET nastavenie hodnôt
+-- POSTUPNOSŤ VYHODNOCOVANIA - NAJPRV sa vyhodnotí podmienka WHERE až potom sa uskutoční SET
+-- môžeme updatovať aj viaceré riadky naraz
+UPDATE nazov_tabulky
+SET "firstName" = 'Nove meno',
+    "lastName" = 'Nove priezvisko'
+WHERE "customerId" < 14;
+
+-- nájde všetky stĺpce - vybranej tabuľky 
+SELECT column_name
+FROM information_schema.columns
+WHERE table_schema='public' AND table_name = 'product_data';
+
+-- 1. Ak by som chcela pridať column s constrainom NOT NULL vypíše nám chybu
+-- nevieme ho pridať jednoduchým spôsobom 
+ALTER TABLE product_data
+ADD COLUMN "newColumn" VARCHAR(256) NOT NULL;
+
+-- 2. Vytvorím si daný stĺpec bez obmedzenia NOT NULL
+ALTER TABLE product_data
+ADD COLUMN "newColumn" VARCHAR(256);
+
+-- 3. Updatujeme záznamy v stĺpci "newColumn"
+UPDATE product_data
+SET "newColumn" = 'x';
+
+-- 4. Kontrola či je všetko ok
+SELECT code, name, "newColumn"
+FROM product_data;
+
+-- 5. Nastavenie constraintu = NOT NULL -> v tabuľke, v stĺpci, nastav constraint
+ALTER TABLE product_data
+ALTER COLUMN "newColumn" 
+SET NOT NULL;
