@@ -185,9 +185,31 @@ SELECT * FROM "nazovTabulky";
 -- mazanie údajov - postupne riadok po riadku
 DROP TABLE "nazovTabulky";
 
+-- PR: 
+DROP TABLE IF EXISTS product_administration  CASCADE;
+DROP TABLE IF EXISTS product_image CASCADE;
+DROP TABLE IF EXISTS product CASCADE;
+DROP TABLE IF EXISTS variant_template CASCADE;
+DROP TABLE IF EXISTS variant_parameter CASCADE;
+DROP TABLE IF EXISTS variant_parameter_value CASCADE;
+DROP TABLE IF EXISTS variant_parameter_template CASCADE;
+DROP TABLE IF EXISTS category CASCADE;
+DROP TABLE IF EXISTS product_administration_category CASCADE;
+
 -- 5. TRUNCATE TABLE - tak isto opatrne! - rýchlejší ako DELETE FROM - súvisí s transakciami
 TRUNCATE TABLE "nazovTabulky";
 
 -- 6. TRUNCATE TABLE - RESTART IDENTITY - reštartuje aj autoincrement - čiže by sa počítal opäť od 1
 -- uzamyká sa celá tabuľka, rýchlejšie mazanie
 TRUNCATE TABLE "nazovTabulky" RESTART IDENTITY;
+
+-- PR:
+TRUNCATE TABLE product_administration RESTART IDENTITY;
+TRUNCATE TABLE product_image RESTART IDENTITY;
+TRUNCATE TABLE product RESTART IDENTITY;
+TRUNCATE TABLE variant_template RESTART IDENTITY;
+TRUNCATE TABLE variant_parameter RESTART IDENTITY;
+TRUNCATE TABLE variant_parameter_value RESTART IDENTITY;
+TRUNCATE TABLE variant_parameter_template RESTART IDENTITY;
+TRUNCATE TABLE category RESTART IDENTITY;
+TRUNCATE TABLE product_administration_category RESTART IDENTITY;
