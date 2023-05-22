@@ -65,6 +65,14 @@ JOIN variant_parameter_value vpv
 	ON vpv.id_variant_parameter=vp.id_variant_parameter
 WHERE vpt.id_variant_template = 1;
 
+-- VARIANT TEMPLATE - ako sa pomocou JOIN dostať k šablóne TEMPLATE-PARAMETER-VALUE
+SELECT *
+FROM variant_template AS vt
+JOIN variant_parameter_template AS vpt
+ON vt.id_variant_template=vpt.id_variant_template
+WHERE vt.id_variant_template = 1
+AND vpt.id_variant_parameter = 4;
+
 -- VYHĽADANIE PODKATEGÓRIÍ
 SELECT subcategory.id_category, subcategory.name_category, main_category.name_category AS parent_category
 FROM category subcategory
@@ -101,3 +109,4 @@ ON padmin.id_product_administration=padmin_category.id_product_administration
 JOIN product AS code_product
 ON padmin.id_product_administration=code_product.id_product_administration
 WHERE code_product.id_product = 'NK156/4';
+
